@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace tutoripProva.Models
 {
-    public class Studente
+    public class Utente
     {
         [JsonProperty("id")]
         public int id { get; set; }

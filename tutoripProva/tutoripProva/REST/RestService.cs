@@ -19,7 +19,7 @@ namespace tutoripProva.REST
 
         public async Task<Elenco> GetStudentsDataAsync(string uri)
         {
-            Elenco studenti = null;
+            Elenco utenti = null;
 
             try
             {
@@ -27,14 +27,14 @@ namespace tutoripProva.REST
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    studenti = JsonConvert.DeserializeObject<Elenco>(content);
+                    utenti = JsonConvert.DeserializeObject<Elenco>(content);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("\tERROR {0}", ex.Message);
             }
-            return studenti;
+            return utenti;
         }
     }
 }

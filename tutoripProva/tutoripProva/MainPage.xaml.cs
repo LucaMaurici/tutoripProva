@@ -21,15 +21,14 @@ namespace tutoripProva
 
         private async void bt_search_Clicked(object sender, EventArgs e)
         {
-            Elenco studenti = await _restService.GetStudentsDataAsync(GenerateRequestUri(Constants.TutoripEndPoint));
-            BindingContext = studenti;
-            
+            Elenco utenti = await _restService.GetStudentsDataAsync(GenerateRequestUri(Constants.TutoripEndPoint));
+            BindingContext = utenti;
         }
 
         private string GenerateRequestUri(string endpoint)
         {
             String requestUri = endpoint;
-            requestUri += "/studente/read.php";
+            requestUri += "/utente/read.php";
 
             return requestUri;
         }

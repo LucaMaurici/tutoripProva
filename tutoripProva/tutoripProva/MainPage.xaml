@@ -8,11 +8,12 @@
 
     <StackLayout>
         <Button x:Name="bt_search" 
-                Text="Search Students"
+                Text="Search Users"
                 Clicked="bt_search_Clicked">
         </Button>
 
-        <Label Text="{Binding studenti[0].nome}">
+        <!--<Label Text="{Binding utenti[0].nome} {Binding utenti[0].cognome} {Binding utenti[0].tipo}">-->
+        <Label Text="{Binding utenti[0].nome}">
         </Label>
 
     </StackLayout>
