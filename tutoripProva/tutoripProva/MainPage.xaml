@@ -7,10 +7,14 @@
              x:Class="tutoripProva.MainPage">
 
     <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        <Button x:Name="bt_search" 
+                Text="Search Students"
+                Clicked="bt_search_Clicked">
+        </Button>
+
+        <Label Text="{Binding studenti[0].nome}">
+        </Label>
+
     </StackLayout>
 
 </ContentPage>
