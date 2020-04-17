@@ -16,7 +16,7 @@
         <Label Text="{Binding utenti[0].nome}">
         </Label>
 
-        <Label Text="{Binding studenti[0].cognome}">
+        <Label Text="{Binding utenti[0].cognome}">
         </Label>
 
     </StackLayout>
