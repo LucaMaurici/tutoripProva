@@ -12,12 +12,16 @@
                 Clicked="bt_search_Clicked">
         </Button>
 
-        <!--<Label Text="{Binding utenti[0].nome} {Binding utenti[0].cognome} {Binding utenti[0].tipo}">-->
+        <!--<Label Text="{Binding utenti[0].nome} {Binding utenti[0].cognome} {Binding utenti[0].tipo}">
         <Label Text="{Binding utenti[0].nome}">
         </Label>
 
         <Label Text="{Binding utenti[0].cognome}">
-        </Label>
+        </Label>-->
+
+        <ListView x:Name="Users"
+                  ItemTapped="Users_ItemTapped">
+        </ListView>
 
     </StackLayout>
 

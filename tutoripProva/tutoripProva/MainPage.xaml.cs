@@ -22,15 +22,8 @@ namespace tutoripProva
         private async void bt_search_Clicked(object sender, EventArgs e)
         {
             Elenco elenco = await _restService.GetStudentsDataAsync(GenerateRequestUri(Constants.TutoripEndPoint));
-            BindingContext = elenco;
-
-            for(int i = 0; i<elenco.utenti.Length; i++)
-            {
-                Content = new Label
-                {
-                    Text = elenco.utenti[i].cognome
-                };
-            }
+            //BindingContext = elenco;
+            Users.ItemsSource = elenco.utenti;
         }
 
         private string GenerateRequestUri(string endpoint)
@@ -39,6 +32,11 @@ namespace tutoripProva
             requestUri += "/utente/read.php";
 
             return requestUri;
+        }
+
+        private void Users_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            DisplayAlert("User", "Selected", "ok");
         }
     }
 }

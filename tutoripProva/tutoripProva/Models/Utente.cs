@@ -7,6 +7,7 @@ namespace tutoripProva.Models
 {
     public class Utente
     {
+
         [JsonProperty("id")]
         public int id { get; set; }
 
@@ -18,6 +19,11 @@ namespace tutoripProva.Models
 
         [JsonProperty("tipo")]
         public String tipo { get; set; }
+
+        public override string ToString()
+        {
+            return nome + " " + cognome;
+        }
 
     }
 }
