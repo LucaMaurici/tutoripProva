@@ -21,8 +21,16 @@ namespace tutoripProva
 
         private async void bt_search_Clicked(object sender, EventArgs e)
         {
-            Elenco utenti = await _restService.GetStudentsDataAsync(GenerateRequestUri(Constants.TutoripEndPoint));
-            BindingContext = utenti;
+            Elenco elenco = await _restService.GetStudentsDataAsync(GenerateRequestUri(Constants.TutoripEndPoint));
+            BindingContext = elenco;
+
+            for(int i = 0; i<elenco.utenti.Length; i++)
+            {
+                Content = new Label
+                {
+                    Text = elenco.utenti[i].cognome
+                };
+            }
         }
 
         private string GenerateRequestUri(string endpoint)
