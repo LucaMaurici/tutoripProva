@@ -8,6 +8,6 @@ namespace tutoripProva.Models
     public class Elenco
     {
         [JsonProperty("Elenco")]
-        public Studente[] studenti { get; set; }
+        public Utente[] utenti { get; set; }
     }
 }
