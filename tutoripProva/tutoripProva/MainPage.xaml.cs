@@ -30,7 +30,6 @@ namespace tutoripProva
         {
             String requestUri = endpoint;
             requestUri += "/utente/read.php";
-
             return requestUri;
         }
 
