@@ -38,7 +38,7 @@ namespace tutoripProva.REST
             return utenti;
         }
 
-        public async Task SaveElements(Utente user, String uri, bool isNewItem = false)
+        public async Task<String> SaveElements(Utente user, String uri, bool isNewItem=false)
         {
             var json = JsonConvert.SerializeObject(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -46,11 +46,14 @@ namespace tutoripProva.REST
             if (isNewItem) //??
             {
                 response = await _client.PostAsync(uri, content);
+                Console.WriteLine(response.StatusCode);
             }
             if (response.IsSuccessStatusCode)
             {
                 Debug.WriteLine(@"\tTodoItem successfully saved."); //Non utile
             }
+
+            return json;
         }
 
         public async Task UpdateElements(Utente user, String uri, bool isNewItem = false)
@@ -100,14 +103,13 @@ namespace tutoripProva.REST
             }
         }
 
-        public async Task DeleteElements(string id)
+        public async Task DeleteElements(int id)
         {
-            var uri = new Uri(string.Format(Constants.TutoripEndPoint, id));
-
+            var uri = new Uri(string.Format(Constants.TutoripEndPoint+ "/utente/delete.php", id));
             try
             {
                 var response = await _client.DeleteAsync(uri);
-
+                Console.WriteLine(response.StatusCode);
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine(@"\tTodoItem successfully deleted.");
