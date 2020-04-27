@@ -9,16 +9,11 @@ using tutoripProva.Models;
 
 namespace tutoripProva.REST
 {
-    class RestService
+    static class RestService
     {
-        private static readonly HttpClient _client;
+        private static readonly HttpClient _client = new HttpClient();
 
-        static RestService()
-        {
-            _client = new HttpClient();
-        }
-
-        public async Task<Elenco> GetStudentsDataAsync(string uri)
+        public static async Task<Elenco> GetStudentsDataAsync(string uri)
         {
             Elenco utenti = null;
 
@@ -38,15 +33,26 @@ namespace tutoripProva.REST
             return utenti;
         }
 
-        public async Task<String> SaveElements(Utente user, String uri, bool isNewItem=false)
+        public static async Task<String> SaveElements(Utente user, String uri, bool isNewItem=false)
         {
             var json = JsonConvert.SerializeObject(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = null;
             if (isNewItem) //??
             {
-                response = await _client.PostAsync(uri, content);
-                Console.WriteLine(response.StatusCode);
+                try
+                {
+                    response = await _client.PostAsync(uri, content);
+                    Console.WriteLine(response.StatusCode);
+                }
+                catch(HttpRequestException ex)
+                {
+                    Debug.WriteLine("\tERROR {1}", ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("\tERROR {0}", ex.Message);
+                }
             }
             if (response.IsSuccessStatusCode)
             {
@@ -56,46 +62,67 @@ namespace tutoripProva.REST
             return json;
         }
 
-        public async Task UpdateElements(Utente user, String uri, bool isNewItem = false)
+        public static async Task UpdateElements(Utente user, String uri, bool isNewItem = false)
         {
             var json = JsonConvert.SerializeObject(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = null;
-            if (isNewItem) //??
+            try
             {
-                response = await _client.PutAsync(uri, content);
+                HttpResponseMessage response = null;
+                if (isNewItem) //??
+                {
+                    response = await _client.PutAsync(uri, content);
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"\tTodoItem successfully saved."); //Non utile
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(@"\tERROR {1}", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
             }
 
-            if (response.IsSuccessStatusCode)
-            {
-                Debug.WriteLine(@"\tTodoItem successfully saved."); //Non utile
-            }
         }
 
         //versione update e save tutta in uno
-        public async Task SaveOrUpdateElements(Utente user, String uri, bool isNewItem = false)
+        public static async Task SaveOrUpdateElements(Utente user, String uri, bool isNewItem = false)
         {   
             try
             {
                 var json = JsonConvert.SerializeObject(user);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = null;
-                if (isNewItem)
+                try
                 {
-                    response = await _client.PostAsync(uri, content);
-                }
-                else
-                {
-                    response = await _client.PutAsync(uri, content);
-                }
+                    HttpResponseMessage response = null;
+                    if (isNewItem)
+                    {
+                        response = await _client.PostAsync(uri, content);
+                    }
+                    else
+                    {
+                        response = await _client.PutAsync(uri, content);
+                    }
 
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine(@"\tTodoItem successfully saved.");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Debug.WriteLine(@"\tTodoItem successfully saved.");
+                    }
                 }
-
+                catch (HttpRequestException ex)
+                {
+                    Debug.WriteLine(@"\tERROR {1}", ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("\tERROR {0}", ex.Message);
+                }
             }
             catch (Exception ex)
             {
@@ -135,13 +162,24 @@ namespace tutoripProva.REST
             }
         }
 
-        public async Task<String> DeleteElements(int id)
+        public static async Task<String> DeleteElements(int id)
         {
             Uri uri = new Uri(string.Format(Constants.TutoripEndPoint + "/utente/delete.php"));
             var json = JsonConvert.SerializeObject(new Identificativo(id));
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _client.PostAsync(uri, content);
-            Console.WriteLine("Risposta: " + response.StatusCode);
+            try
+            {
+                HttpResponseMessage response = await _client.PostAsync(uri, content);
+                Console.WriteLine("Risposta: " + response.StatusCode);
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(@"\tERROR {1}", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+            }
 
             return json;
         }

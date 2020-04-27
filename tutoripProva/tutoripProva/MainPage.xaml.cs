@@ -14,16 +14,16 @@ namespace tutoripProva
 {
     public partial class MainPage : ContentPage
     {
-        RestService _restService;
+        //RestService _restService;
         public MainPage()
         {
             InitializeComponent();
-            _restService = new RestService();
+            //_restService = new RestService();
         }
 
         private async void bt_search_Clicked(object sender, EventArgs e)
         {
-            Elenco elenco = await _restService.GetStudentsDataAsync(GenerateRequestUri(Constants.TutoripEndPoint));
+            Elenco elenco = await RestService.GetStudentsDataAsync(GenerateRequestUri(Constants.TutoripEndPoint));
             //BindingContext = elenco;
             Users.ItemsSource = elenco.utenti;
         }
@@ -41,7 +41,7 @@ namespace tutoripProva
             //DisplayAlert("User " + u.id, "Selected", "ok");
             Utente u = (Utente)e.Item;
             Console.WriteLine(u.id);
-            await _restService.DeleteElements(u.id);
+            await RestService.DeleteElements(u.id);
         }
 
         private async void bt_add_Clicked(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace tutoripProva
             utente.cognome = "Prova";
             utente.nome = "prova";
             utente.tipo = "0";
-            Console.WriteLine(await _restService.SaveElements(utente, GenerateAddUri(Constants.TutoripEndPoint), true));
+            Console.WriteLine(await RestService.SaveElements(utente, GenerateAddUri(Constants.TutoripEndPoint), true));
 
         }
 
