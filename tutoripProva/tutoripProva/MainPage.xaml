@@ -25,8 +25,8 @@
         </Label>-->
 
         <ListView x:Name="Users"
-                  ItemTapped="Users_ItemTapped"
-                  ItemSelected="Users_ItemSelected">
+                  ItemTapped="Users_ItemTapped">
+            <!--ItemSelected="Users_ItemSelected">-->
         </ListView>
 
     </StackLayout>

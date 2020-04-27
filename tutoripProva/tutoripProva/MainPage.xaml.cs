@@ -35,10 +35,13 @@ namespace tutoripProva
             return requestUri;
         }
 
-        private void Users_ItemTapped(object sender, ItemTappedEventArgs e)
+        private async void Users_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            DisplayAlert("User", "Selected", "ok");
-            
+            //Utente u = (Utente)e.Item;
+            //DisplayAlert("User " + u.id, "Selected", "ok");
+            Utente u = (Utente)e.Item;
+            Console.WriteLine(u.id);
+            await _restService.DeleteElements(u.id);
         }
 
         private async void bt_add_Clicked(object sender, EventArgs e)
@@ -58,11 +61,13 @@ namespace tutoripProva
             return requestUri;
         }
 
+        /*
         private async void Users_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             Utente u = (Utente) e.SelectedItem;
             Console.WriteLine(u.id);
             await _restService.DeleteElements(u.id);
         }
+        */
     }
 }

@@ -11,9 +11,9 @@ namespace tutoripProva.REST
 {
     class RestService
     {
-        HttpClient _client;
+        private static readonly HttpClient _client;
 
-        public RestService()
+        static RestService()
         {
             _client = new HttpClient();
         }
@@ -103,6 +103,7 @@ namespace tutoripProva.REST
             }
         }
 
+        /*
         public async Task DeleteElements(int id)
         {
             var uri = new Uri(string.Format(Constants.TutoripEndPoint+ "/utente/delete.php", id));
@@ -121,5 +122,29 @@ namespace tutoripProva.REST
                 Debug.WriteLine(@"\tERROR {0}", ex.Message);
             }
         }
+        */
+
+        private class Identificativo
+        {
+            [JsonProperty("id")]
+            int id;
+            public Identificativo(int id)
+            {
+               
+                this.id = id;
+            }
+        }
+
+        public async Task<String> DeleteElements(int id)
+        {
+            Uri uri = new Uri(string.Format(Constants.TutoripEndPoint + "/utente/delete.php"));
+            var json = JsonConvert.SerializeObject(new Identificativo(id));
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync(uri, content);
+            Console.WriteLine("Risposta: " + response.StatusCode);
+
+            return json;
+        }
+
     }
 }
